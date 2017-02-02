@@ -1,0 +1,3 @@
+
+dunham=pronoun
+dog=noun

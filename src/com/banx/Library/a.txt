@@ -1,0 +1,3 @@
+apple=noun
+attack=verb
+am=verb
