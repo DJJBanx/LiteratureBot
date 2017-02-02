@@ -69,6 +69,11 @@ public class Reader {
                                 currentSentence.addWord(new Word(currentWordS));
                                 currentWordS = "";
                             }
+                        } else if (x=='.') {
+                            currentSentence.addWord(new Word(currentWordS));
+                            sentences.add(new Sentence(currentSentence));
+                            currentSentence.flush();
+                            currentWordS="";
                         } else if (i==(line.length-1)) {
                             currentWordS+=x;
                             //Debug
@@ -77,12 +82,6 @@ public class Reader {
                                 currentSentence.addWord(new Word(currentWordS));
                                 currentWordS = "";
                             }
-                        }
-                        else if (x=='.') {
-                            currentSentence.addWord(new Word(currentWordS));
-                            sentences.add(new Sentence(currentSentence));
-                            currentSentence.flush();
-                            currentWordS="";
                         }
                     }
                 }
