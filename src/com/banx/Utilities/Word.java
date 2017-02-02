@@ -30,9 +30,18 @@ public class Word {
     private FileWriter fw = null;
 
     public Word(String word) {
-        this.word = word.toLowerCase();
-        lcount = word.length();
-        checkStatus();
+        if (word.equals("comma")){
+            this.word = ",";
+            lcount = 0;
+        } else if (word.equals("hyphen")) {
+            this.word = "-";
+            lcount = 0;
+        }
+        else {
+            this.word = word.toLowerCase();
+            lcount = word.length();
+            checkStatus();
+        }
     }
 
     public void printStats() {

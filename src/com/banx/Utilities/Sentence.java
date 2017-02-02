@@ -27,4 +27,11 @@ public class Sentence {
     public void addWord(Word word) {
         words.add(word);
     }
+    public void addComma() {
+        words.add(new Word("comma"));
+    }
+
+    public void addHyphen() {
+        words.add(new Word("hyphen"));
+    }
 }

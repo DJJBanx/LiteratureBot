@@ -61,7 +61,7 @@ public class Reader {
                          **/
 
                         //System.out.println(RED+x+RESET);
-                        if (x!=' ' && x!='.' && i!=(line.length-1)) {
+                        if (x!=' ' && x!='.' && i!=(line.length-1) && x!=',' && x!='-') {
                             currentWordS+=x;
                             //Debug
                             //System.out.println(currentWordS);
@@ -70,7 +70,20 @@ public class Reader {
                                 currentSentence.addWord(new Word(currentWordS));
                                 currentWordS = "";
                             }
-                        } else if (x=='.') {
+                        } else if (x==',') {
+                            if (!currentWordS.equals("")) {
+                                currentSentence.addWord(new Word(currentWordS));
+                                currentWordS = "";
+                            }
+                            currentSentence.addComma();
+                        } else if (x=='-') {
+                            if (currentWordS.equals("")) {
+                                currentSentence.addHyphen();
+                            } else {
+                                currentWordS+=x;
+                            }
+                        }
+                        else if (x=='.') {
                             currentSentence.addWord(new Word(currentWordS));
                             sentences.add(new Sentence(currentSentence));
                             currentSentence = new Sentence();
