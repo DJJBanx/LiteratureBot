@@ -52,18 +52,19 @@ public class Reader {
                     for (int i=0;i<line.length;i++) {
                         char x = line[i];
                         //Debug
-                        /**
-                        try {
+
+                        /**try {
                             Thread.sleep(250);
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
-                        **/
+                         **/
+
                         //System.out.println(RED+x+RESET);
                         if (x!=' ' && x!='.' && i!=(line.length-1)) {
                             currentWordS+=x;
                             //Debug
-                            System.out.println(currentWordS);
+                            //System.out.println(currentWordS);
                         } else if (x==' ') {
                             if (!currentWordS.equals("")) {
                                 currentSentence.addWord(new Word(currentWordS));
@@ -72,12 +73,12 @@ public class Reader {
                         } else if (x=='.') {
                             currentSentence.addWord(new Word(currentWordS));
                             sentences.add(new Sentence(currentSentence));
-                            currentSentence.flush();
+                            currentSentence = new Sentence();
                             currentWordS="";
                         } else if (i==(line.length-1)) {
                             currentWordS+=x;
                             //Debug
-                            System.out.println(currentWordS);
+                            //System.out.println(currentWordS);
                             if (!currentWordS.equals("")) {
                                 currentSentence.addWord(new Word(currentWordS));
                                 currentWordS = "";

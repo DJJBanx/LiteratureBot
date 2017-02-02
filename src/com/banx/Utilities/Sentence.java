@@ -21,16 +21,10 @@ public class Sentence {
     }
 
     public ArrayList<Word> getWords() {
-        return words;
+        return new ArrayList<>(words);
     }
 
     public void addWord(Word word) {
         words.add(word);
-    }
-
-    public void flush() {
-        for (int i=0;i<words.size();) {
-            words.remove(i);
-        }
     }
 }
