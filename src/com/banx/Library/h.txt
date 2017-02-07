@@ -1,3 +1,0 @@
-
-hope=verb
-having=verb

@@ -1,3 +1,0 @@
-
-grape=noun
-great=adj
