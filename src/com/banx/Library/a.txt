@@ -1,5 +1,0 @@
-apple=noun
-attack=verb
-am=verb
-are=verb
-a=prep
