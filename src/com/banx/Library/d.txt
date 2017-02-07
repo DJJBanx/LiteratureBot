@@ -1,0 +1,4 @@
+
+dunham=pronoun
+dog=noun
+day=noun
