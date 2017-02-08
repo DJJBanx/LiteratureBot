@@ -34,6 +34,6 @@ public class Link {
     }
 
     public String choose() {
-    	return null;
+    	return links.get(rand.nextInt(links.size()));
     }
 }

@@ -17,8 +17,7 @@ public class Main {
             while ((line = b.readLine()) != null) {
                 seed += line + "\n";
             }
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             seed = "The quick brown fox jumped over the lazy dog.";
         }
         seed.replace('\n', ' ');
@@ -26,8 +25,8 @@ public class Main {
         int width = 2;
         String key = "";
         String piece = "";
-        int i = 0;
-        while (i < input.length - (width + 1)) {
+        
+        for (int i = 0; i < input.length - (width + 1); i += width) {
             piece = slice(input, i, i + width);
             if (!tree.containsKey(key)) {
                 tree.put(key, new Link());
@@ -36,18 +35,20 @@ public class Main {
             key = piece;
             i += width;
         }
+        
         int depth = 100;
         Random rand = new Random();
         Object[] keys = tree.keySet().toArray(); 
         String pos = (String)keys[rand.nextInt(keys.length)];
-        //System.out.print(pos + " ");
-        int i2 = 0;
-        while (i2 < depth) {
-        	if (tree.get(pos) == null);
-        		System.out.println(" !!! " + tree.get(pos));
-            pos = tree.get(pos).choose();
+        
+        Link l;
+        for (int j = 0; j < depth; j++) {
+        	l = tree.get(pos);
+        	if (l == null) {
+        		break;
+        	}
+        	pos = l.choose();
             System.out.print(pos + " ");
-            ++i2;
         }
     }
 
