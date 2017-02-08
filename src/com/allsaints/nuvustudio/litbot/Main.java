@@ -58,7 +58,7 @@ public class Main {
         		break;
         	}
         	pos = l.choose();
-            System.out.print(pos + " ");
+        	System.out.print(pos + " ");
         }
     }
    
