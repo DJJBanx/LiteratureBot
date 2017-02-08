@@ -8,19 +8,10 @@ import java.util.Random;
 import java.util.Set;
 
 public class Link {
-	private class Count {
-		int count;
-		double prob;
-		
-		public Count(int i) {
-			count = i;
-		}
-	}
     private HashMap<String, Integer> links = new HashMap<>();
     private Random rand = new Random();
     private int totalLinks = 0;
-    private int lastTotal = 0;
-
+    
     public void addTransition(String key) {
         if (links.containsKey(key)) 
         	this.links.put(key, links.get(key) + 1);
