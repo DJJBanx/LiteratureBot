@@ -12,7 +12,9 @@ public class Main {
 	private static int depth = 100;
 	
     public static void main(String[] args) {
-        HashMap<String, Link> tree = new HashMap<String, Link>();
+        HashMap<String, Link> wordChain = new HashMap<String, Link>();
+        HashMap<String, Link> puncChain = new HashMap<String, Link>();
+        
         String seed = "";
         
         try {
@@ -35,17 +37,17 @@ public class Main {
         // train the markov chain
         for (int i = 0; i < input.length - (width + 1); i += width) {
             piece = slice(input, i, i + width);
-            if (!tree.containsKey(key)) {
-                tree.put(key, new Link());
+            if (!wordChain.containsKey(key)) {
+                wordChain.put(key, new Link());
             }
-            tree.get(key).addTransition(piece);
+            wordChain.get(key).addTransition(piece);
             key = piece;
             i += width;
         }
         
         
         Random rand = new Random();
-        Object[] keys = tree.keySet().toArray(); 
+        Object[] keys = wordChain.keySet().toArray(); 
         
         // pick a random starting location
         String pos = (String)keys[rand.nextInt(keys.length)];
@@ -53,7 +55,7 @@ public class Main {
         // generate the text
         Link l;
         for (int j = 0; j < depth; j++) {
-        	l = tree.get(pos);
+        	l = wordChain.get(pos);
         	if (l == null) {
         		break;
         	}
