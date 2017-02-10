@@ -12,37 +12,36 @@ public class Main {
 	private static int depth = 100;
 	
     public static void main(String[] args) {
-        HashMap<String, Link> wordChain = new HashMap<String, Link>();
+        HashMap<String, Link> wordChain = new HashMap<String, Link>(); //able to change String to link
         HashMap<String, Link> puncChain = new HashMap<String, Link>();
         
-        String seed = "";
+        String seed = ""; // starts with the input of Strings
         
         try {
             String line;
-            BufferedReader b = new BufferedReader(new FileReader("seed.txt"));
+            BufferedReader b = new BufferedReader(new FileReader("seed.txt")); //reads line by line
             while ((line = b.readLine()) != null) {
-                seed += line + "\n";
+                seed += line + "\n"; // while there's still something there, add the line and an enter to the seed
             }
             b.close();
         } catch (IOException e) {
-            seed = "The quick brown fox jumped over the lazy dog.";
+            seed = "The quick brown fox jumped over the lazy dog."; // if it doesn't work print this
         }
         
-        seed.replace('\n', ' ');
-        String[] input = seed.split(" ");
+        seed.replace('\n', ' '); // replace new lines with spaces
+        String[] input = seed.split(" "); // splits lines into words and puts the words in an array
         
-        String key = "";
-        String piece = "";
+        String key = ""; // key is the current word in the tree
+        String piece = ""; // piece is the words following the key
         
         // train the markov chain
         for (int i = 0; i < input.length - (width + 1); i += width) {
             piece = slice(input, i, i + width);
             if (!wordChain.containsKey(key)) {
-                wordChain.put(key, new Link());
+                wordChain.put(key, new Link()); // if the key is not in the hashmap, add the key to the hashmap
             }
-            wordChain.get(key).addTransition(piece);
-            key = piece;
-            i += width;
+            wordChain.get(key).addTransition(piece); // adds piece as a transition from key to piece (like dog to eats)
+            key = piece; // change key to equal piece to move onto the next word to make the words logical in placement
         }
         
         
@@ -66,11 +65,12 @@ public class Main {
    
     // get a slice of the seed, which is a series of words added together
     // from index start to index end-1
+    // puts all elements of the array of words into a sentence
     public static String slice(String[] input, int start, int end) {
         String acc = "";
         int i = start;
         while (i < end) {
-            acc = String.valueOf(acc) + input[i] + " ";
+            acc = acc + input[i] + " ";
             ++i;
         }
         return acc.trim();
