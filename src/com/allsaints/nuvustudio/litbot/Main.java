@@ -4,6 +4,7 @@ import com.allsaints.nuvustudio.litbot.Link;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.StringReader;
 import java.util.HashMap;
 import java.util.Random;
 
@@ -34,7 +35,29 @@ public class Main {
         String key = ""; // key is the current word in the tree
         String piece = ""; // piece is the words following the key
         
-        // train the markov chain
+        // train the markov chain on punctation
+        StringReader b = new StringReader(seed);
+        int c; // the character to read in
+        String punc = ".;,:\"\'()!?";
+        String last = ".";
+        
+        try {
+        	c = b.read();
+        	do {
+        		if (punc.indexOf(c) >= 0) {
+        			if (!puncChain.containsKey(last)) {
+        				puncChain.put(last, new Link());
+        			}
+        			puncChain.get(last).addTransition(Character.toString((char) c));
+        			last = "" + c;
+        		}
+        		c = b.read();
+        	} while (c != -1);
+        } catch (IOException e) {
+        	return;
+        }
+        	
+        // old training part
         for (int i = 0; i < input.length - (width + 1); i += width) {
             piece = slice(input, i, i + width);
             if (!wordChain.containsKey(key)) {
@@ -46,7 +69,7 @@ public class Main {
         
         
         Random rand = new Random();
-        Object[] keys = wordChain.keySet().toArray(); 
+        Object[] keys = puncChain.keySet().toArray(); 
         
         // pick a random starting location
         String pos = (String)keys[rand.nextInt(keys.length)];
@@ -54,7 +77,7 @@ public class Main {
         // generate the text
         Link l;
         for (int j = 0; j < depth; j++) {
-        	l = wordChain.get(pos);
+        	l = puncChain.get(pos);
         	if (l == null) {
         		break;
         	}

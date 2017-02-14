@@ -52,9 +52,9 @@ public class Link {
     	
     	for (int j = probs.length - 1; j >= 0; j--) {
     		upper = prev + probs[j];
-    		//System.out.printf("%f <= %f && %f < %f\n", prev, c, c, upper);
-    		if (prev <= c && c < upper) {
-    			//System.out.printf("\t --> chose: %f\n", upper);
+    		System.out.printf("%f <= %f && %f < %f\n", prev, c, c, upper);
+    		if (prev <= c && c <= upper) {
+    			System.out.printf("\t --> chose: %f\n", upper);
     			return map.get(probs[j]);
     		}
     		prev = upper;
