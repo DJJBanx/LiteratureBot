@@ -39,8 +39,11 @@ public class Link {
 
     	double prob;
     	int i = 0;
+		// from my understanding the problem is the fact that you're using a set under getTransitions and
+		// sets don't allow for duplicates so you can't actually get the true probability
+		// so right now this would go through 3 elements and set prob equal to the links value of k over the total number of links
 		for (String k : getTransitions()) {
-			prob = (double) links.get(k) / (double) getSize();
+			prob = (double) links.get(k) / (double) getSize(); //does this check for all instances of String k or just one?
 			probs[i] = prob;
 			map.put(prob, k);
 			i++;
