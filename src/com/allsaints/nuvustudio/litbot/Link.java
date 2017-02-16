@@ -46,6 +46,7 @@ public class Link {
 			prob = (double) links.get(k) / (double) getSize(); //does this check for all instances of String k or just one?
 			probs[i] = prob;
 			map.put(prob, k);
+			//System.out.printf("%f : %s\n", prob, map.get(prob));
 			i++;
 		}
 		Arrays.sort(probs);
@@ -55,9 +56,9 @@ public class Link {
     	
     	for (int j = probs.length - 1; j >= 0; j--) {
     		upper = prev + probs[j];
-    		System.out.printf("%f <= %f && %f < %f\n", prev, c, c, upper);
+    		//System.out.printf("%f <= %f && %f < %f\n", prev, c, c, upper);
     		if (prev <= c && c <= upper) {
-    			System.out.printf("\t --> chose: %f\n", upper);
+    			//System.out.printf("\t --> chose: %f\n", upper);
     			return map.get(probs[j]);
     		}
     		prev = upper;

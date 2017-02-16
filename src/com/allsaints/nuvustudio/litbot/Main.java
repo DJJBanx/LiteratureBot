@@ -48,8 +48,8 @@ public class Main {
         			if (!puncChain.containsKey(last)) {
         				puncChain.put(last, new Link());
         			}
-        			puncChain.get(last).addTransition(Character.toString((char) c));
-        			last = "" + c;
+        			puncChain.get(last).addTransition("" + (char) c);
+        			last = "" + (char) c;
         		}
         		c = b.read();
         	} while (c != -1);
@@ -58,28 +58,30 @@ public class Main {
         }
         	
         // old training part
-        for (int i = 0; i < input.length - (width + 1); i += width) {
-            piece = slice(input, i, i + width);
-            if (!wordChain.containsKey(key)) {
-                wordChain.put(key, new Link()); // if the key is not in the hashmap, add the key to the hashmap
-            }
-            wordChain.get(key).addTransition(piece); // adds piece as a transition from key to piece (like dog to eats)
-            key = piece; // change key to equal piece to move onto the next word to make the words logical in placement
-        }
-        
+//        for (int i = 0; i < input.length - (width + 1); i += width) {
+//            piece = slice(input, i, i + width);
+//            if (!wordChain.containsKey(key)) {
+//                wordChain.put(key, new Link()); // if the key is not in the hashmap, add the key to the hashmap
+//            }
+//            wordChain.get(key).addTransition(piece); // adds piece as a transition from key to piece (like dog to eats)
+//            key = piece; // change key to equal piece to move onto the next word to make the words logical in placement
+//        }
+//        
         
         Random rand = new Random();
-        Object[] keys = puncChain.keySet().toArray(); 
         
         // pick a random starting location
-        String pos = (String)keys[rand.nextInt(keys.length)];
+        Object[] keys = puncChain.keySet().toArray();
         
         // generate the text
         Link l;
+        String pos = (String) keys[rand.nextInt(keys.length)];
+        
         for (int j = 0; j < depth; j++) {
         	l = puncChain.get(pos);
         	if (l == null) {
-        		break;
+        		pos = ".";
+        		continue;
         	}
         	pos = l.choose();
         	System.out.print(pos + " ");
