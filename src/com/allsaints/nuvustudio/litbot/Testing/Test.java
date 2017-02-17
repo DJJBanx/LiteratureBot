@@ -14,10 +14,11 @@ public class Test {
         int numtimesHello = 0;
         int numTimesMy=0;
         int numTimesJames = 0;
-        int var = 10000;
+        int var = 10;
         String s = "";
         for (int i = 0; i<var; i++) {
             s = l.choose();
+            System.out.println(s);
             if (s.equals("hello")) {
                 numtimesHello++;
             } else if(s.equals("my name is")) {
@@ -27,11 +28,11 @@ public class Test {
             } else {
                 System.out.println("poo");
             }
-            try {
+            /*try {
                 Thread.sleep(1);
             } catch (InterruptedException e) {
                 e.printStackTrace();
-            }
+            }*/
         }
         System.out.println("Expect hello " + (var*.5));
         System.out.println("Expect my " + (var*.25));
