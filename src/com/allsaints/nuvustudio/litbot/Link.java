@@ -29,7 +29,7 @@ public class Link {
     }
 
     public Set<String> getTransitions() {
-        Set<String> t = links.keySet();
+        Set<String> t = links.keySet(); // takes all elements and sets them to a probability
         return t;
     }
 
