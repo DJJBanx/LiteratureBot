@@ -2,6 +2,7 @@ package com.allsaints.nuvustudio.litbot;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Random;
@@ -23,7 +24,10 @@ public class Link {
     }
 
     public double getProb(String key) {
-        return (double)links.get(key) / (double)this.getSize();
+        if (links.containsKey(key))
+        	return (double)links.get(key) / (double)this.getSize();
+        else
+        	return 0;
     }
 
     public int getSize() {
@@ -31,7 +35,7 @@ public class Link {
     }
 
     public Set<String> getTransitions() {
-        Set<String> t = links.keySet();
+        Set<String> t = links.keySet(); // takes all elements and sets them to a probability
         return t;
     }
 
@@ -39,7 +43,6 @@ public class Link {
     	double[] probs = new double[getSize()];
     	String[] choices = new String[getSize()];
     	
-    	HashMap<Double, String> map = new HashMap<>();
 
     	double prob;
     	int i = 0;
@@ -48,22 +51,36 @@ public class Link {
 		// so right now this would go through 3 elements and set prob equal to the links value of k over the total number of links
     	
     	// the problem is duplicate probabilties! if two things have the same probablity
+
+
 		for (String k : getTransitions()) {
-			prob = (double) links.get(k) / (double) getSize(); //does this check for all instances of String k or just one?
+			prob = getProb(k);
 			probs[i] = prob;
-			map.put(prob, k);
-			System.out.printf("%f : %s\n", prob, map.get(prob));
+			choices[i] = k;
 			i++;
 		}
 		Arrays.sort(probs);
-
+		Arrays.sort(choices, new Comparator<String>() {
+			@Override
+			public int compare(String x, String y) {
+				double xp = getProb(x);
+				double yp = getProb(y);
+				if (xp < yp) {
+					return -1;
+				} else if (Math.abs(xp-yp) < 0.0000001) { // margin of error
+					return 0;
+				} else if (xp > yp) {
+					return 1;
+				}
+				return 0;
+			}
+			
+		});
+		
     	double c = rand.nextDouble();
     	double prev = 0;
     	double upper;
     	
-    	for (double d : probs) {
-    		System.out.printf("%f --> %s\n", d, map.get(d));
-    	}
     	System.out.println();
     	
     	for (int j = probs.length - 1; j >= 0; j--) {
@@ -71,7 +88,7 @@ public class Link {
     		//System.out.printf("%f <= %f && %f < %f\n", prev, c, c, upper);
     		if (prev <= c && c <= upper) {
     			//System.out.printf("\t --> chose: %f\n", upper);
-    			return map.get(probs[j]);
+    			return choices[j];
     		}
     		prev = upper;
     	}

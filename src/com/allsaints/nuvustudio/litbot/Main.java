@@ -46,7 +46,7 @@ public class Main {
         	do {
         		if (punc.indexOf(c) >= 0) {
         			if (!puncChain.containsKey(last)) {
-        				puncChain.put(last, new Link());
+        				puncChain.put(last, new Link()); // if the last punctuation thing was a period, start a new sentence
         			}
         			puncChain.get(last).addTransition("" + (char) c);
         			last = "" + (char) c;
