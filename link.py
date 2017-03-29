@@ -30,12 +30,13 @@ class Link():
         probs = self.sorted_links()
         prev = 0
         c = random()
+
         for i in reversed(range(0, len(probs))):
             upper = prev + probs[i][1]
-            if prev <= c or c <= upper:
+            if prev <= c and c <= upper:
                 return probs[i][0]
             prev = upper
-        return prev[-1][0] # should never reach this point
+        return None # should never reach this point
     # string dump
     def sdump(self):
         s = []

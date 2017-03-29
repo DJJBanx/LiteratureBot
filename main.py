@@ -56,7 +56,21 @@ def prompt_choice(choices):
             return None, False
     return choices[choice], True
 
-def train(seed):
+def generate_text(words, puncs, spaces, depth=10):
+    puncs.start(".")
+    gen = ""
+    for i in range(depth):
+        gen += puncs.advance()
+
+    new_gen = []
+    for p in gen:
+        new_gen.append((p, spaces[p].choose()))
+    return new_gen
+    
+    # graph part?
+    
+
+def main(seed):
     with open(seed, "r") as f:
             text = f.read()
 
@@ -67,13 +81,12 @@ def train(seed):
             wordComb(text, wordChain)
             puncComb(text, puncChain)
             spaceComb(text, spaceChain)
-
-            print(spaceChain)
+            print(generate_text(wordChain, puncChain, spaceChain))
 
 if __name__ == "__main__":
     if len(argv) > 1 and argv[1][:4] == "seed":
-        train(argv[1])
+        main(argv[1])
     else:
         seed, success = ask_for_seed()
         if success:
-            train(seed)
+            main(seed)
