@@ -7,7 +7,7 @@ from sys import argv
 
 punc = ".;,:\"\'()!?"
 
-def wordComb(text, chain):
+def word_comb(text, chain):
     acc = ""
     prev = ""
     for c in text:
@@ -18,7 +18,7 @@ def wordComb(text, chain):
         else:
             acc += c
 
-def puncComb(text, chain):
+def punc_comb(text, chain):
     prev = "."
     for c in text:
         if c in punc:
@@ -27,14 +27,14 @@ def puncComb(text, chain):
         else:
             pass # continue searching
 
-def spaceComb(text, chain):
+def space_comb(text, chain):
     prev = "."
-    spaces = 0
+    spaces = 1
     for c in text:
         if c in punc:
             chain.add_transition(prev, spaces)
             prev = c
-            spaces = 0
+            spaces = 1
         elif c == ' ':
             spaces += 1
         else:
@@ -65,23 +65,35 @@ def generate_text(words, puncs, spaces, depth=10):
     new_gen = []
     for p in gen:
         new_gen.append((p, spaces[p].choose()))
-    return new_gen
-    
-    # graph part?
-    
 
+    final = ""
+    for item in new_gen:
+        final += item[0]
+        words.start("")
+        # final += " "
+        for i in range(item[1]):
+            final += words.advance() + " "
+        final = final[:-1]
+    return final
+
+# graph part?
 def main(seed):
     with open(seed, "r") as f:
-            text = f.read()
+        text = f.read()
+        text.replace("\n", "")
 
-            wordChain = MarkovChain()
-            puncChain = MarkovChain()
-            spaceChain = MarkovChain()
-            
-            wordComb(text, wordChain)
-            puncComb(text, puncChain)
-            spaceComb(text, spaceChain)
-            print(generate_text(wordChain, puncChain, spaceChain))
+        word_chain = MarkovChain()
+        punc_chain = MarkovChain()
+        space_chain = MarkovChain()
+
+        word_comb(text, word_chain)
+        punc_comb(text, punc_chain)
+        space_comb(text, space_chain)
+
+        # print(word_chain)
+        # print(punc_chain)
+        # print(space_chain)
+        print(generate_text(word_chain, punc_chain, space_chain))
 
 if __name__ == "__main__":
     if len(argv) > 1 and argv[1][:4] == "seed":
